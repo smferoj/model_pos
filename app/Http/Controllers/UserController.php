@@ -4,11 +4,21 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
+
 {
+
+    function RegistrationPage(): View
+    {
+        return view('pages.auth.registration-page');
+    }
+
+
+
     function UserRegistration(Request $request)
     {
         try {
@@ -29,6 +39,27 @@ class UserController extends Controller
             return response()->json([
                 'status' =>  'success', 'message' => 'User Registration Successfully'
             ]);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function UserLogin(Request $request){
+        try {
+            $request->validate([
+                'email' => 'required|string|email|max:50',
+                'password' => 'required|string|min:3',
+            ]);
+            $user = User::where('email', $request->input('email'))->first();
+
+            if(!$user || !Hash::check($request->input('password'), $user->password)){
+                return response()->json(['status' => 'fail', 'message' => 'Invalid User']);
+            }
+
+            $token = $user->createToken('authToken')->plainTextToken;
+            return response()->json(['status' => 'success', 'message' => 'Login Successful', 'token'=> $token]);
+
+            
         } catch (Exception $e) {
             return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
         }
