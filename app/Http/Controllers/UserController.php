@@ -6,15 +6,40 @@ use Exception;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 
 {
 
+    function LoginPage(): View
+    {
+        return view('pages.auth.login-page');
+    }
+
     function RegistrationPage(): View
     {
         return view('pages.auth.registration-page');
+    }
+    
+    function SendOtpPage(): View
+    {
+        return view('pages.auth.send-otp-page');
+    }
+    function VerifyOTPPage(): View
+    {
+        return view('pages.auth.verify-otp-page');
+    }
+
+    function ResetPasswordPage(): View
+    {
+        return view('pages.auth.reset-pass-page');
+    }
+
+    function ProfilePage(): View
+    {
+        return view('pages.dashboard.profile-page');
     }
 
 
@@ -63,6 +88,11 @@ class UserController extends Controller
         } catch (Exception $e) {
             return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
         }
+    }
+
+    function UserProfile(Request $request)
+    {
+        return Auth::user();
     }
 
 }
