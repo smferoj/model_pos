@@ -7,7 +7,7 @@ function hideLoader() {
 
 function successToast(msg) {
     Toastify({
-        gravity: "bottom", // `top` or `bottom`
+        gravity: "left", // `top` or `bottom`
         position: "center", // `left`, `center` or `right`
         text: msg,
         className: "mb-5",
