@@ -52,10 +52,7 @@
         }catch (e) {
            unauthorized(e.response.status)
         }
-    }
-
-
-    async function onUpdate(){
+        async function onUpdate(){
         let PostBody={
             "firstName":document.getElementById('firstName').value,
             "lastName":document.getElementById('lastName').value,
@@ -71,6 +68,8 @@
         else {
             successToast(res.data['message'])
         }
+    }
 
     }
+
 </script>
