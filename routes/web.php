@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -16,7 +17,11 @@ Route::post('/user-update',[UserController::class,'UpdateProfile'])->middleware(
 // Category Web Routes
 
 
-
+Route::post('/create-category', [CategoryController::class, 'CategoryCreate'])->middleware('auth:sanctum');
+Route::get('/list-category', [CategoryController::class, 'CategoryList'])->middleware('auth:sanctum');
+Route::post('/delete-category', [CategoryController::class, 'CategoryDelete'])->middleware('auth:sanctum');
+Route::post('/update-category', [CategoryController::class, 'CategoryUpdate'])->middleware('auth:sanctum');
+Route::post('/category-by-id', [CategoryController::class, 'CategoryByID'])->middleware('auth:sanctum');
 
 
 
@@ -26,3 +31,7 @@ Route::view('/userRegistration','pages.auth.registration-page');
 Route::view('/userLogin','pages.auth.login-page')->name('login');
 Route::view('/userProfile','pages.dashboard.profile-page');
 
+
+
+
+Route::view('/categoryPage', 'pages.dashboard.category-page');
